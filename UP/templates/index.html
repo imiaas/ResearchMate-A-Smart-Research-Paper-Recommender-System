@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Judul Halaman -->
+	<title>ResearchMate</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!-- Icon -->
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+	
+	<!-- CSS -->
+	<link rel="stylesheet" href={{ url_for('static', filename='/css/bootstrap.min.css') }} type="text/css">
+	<link rel="stylesheet" href={{ url_for('static', filename='/css/client_side.css') }}  type="text/css">
+	
+      
+
+	<!-- JavaScript -->
+	<script src={{ url_for('static', filename='/js/jquery_3.6.0.min.js') }} ></script>
+	<script src={{ url_for('static', filename='/js/bootstrap_3.4.1.min.js') }} ></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('form').submit(function(event) {
+                event.preventDefault();  // Prevent form submission
+
+                // Get the query from the input field
+                var query = $('input[name=query]').val();
+
+                // Send an AJAX POST request to the Flask server
+                $.ajax({
+                    url: '/search',
+                    type: 'POST',
+                    data: {query: query},
+                    success: function(response) {
+                        // Update the search results on the page
+                        var resultsHtml = '';
+                        response.forEach(function(result) {
+                            resultsHtml += '<li>';
+                            resultsHtml += '<h3>' + result.title + '</h3>';
+                            resultsHtml += '<p>' + result.authors + '</p>';
+							resultsHtml += '<p><a href="' + result.link + '">' + result.link + '</a></p>';
+                            resultsHtml += '</li>';
+                        });
+                        $('#search-results').html('<ul>' + resultsHtml + '</ul>');
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<body id="halamanku" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+	<!-- Navigation Bar -->
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			
+			<!-- Logo -->
+			<div class="navbar-header">
+				<img src={{ url_for('static', filename='/images/orbit_logo.png') }} alt="Orbit Logo" 
+				width="50" height="50" align="left">
+				<a class="navbar-brand" href="#halamanku">&#160; ResearchMate</a>
+			</div>
+			
+			<!-- Daftar Halaman -->
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#informasi">INFORMASI</a></li>
+					<li><a href="#aplikasi">APLIKASI</a></li>
+					<li><a href="#anggotaKelompok">ANGGOTA KELOMPOK</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Bagian Halaman (Informasi) -->
+	<div id="informasi" class="container-fluid">
+		<br>
+		<br>
+		<div class="row">
+			<div class="col-sm-6">
+				<!-- Deskripsi Aplikasi -->
+				<h2>ResearchMate</h2>
+				<h4>A Smart Recommender System</h4><br>
+				<p style="text-align: justify;text-justify: inter-word;">
+					ResearchMate is a platform that aims to assist researchers in discovering relevant 
+					research papers aligned with their interests. By leveraging the power of natural 
+					language processing (NLP) and data science, ResearchMate analyzes researchers' preferences 
+					and provides personalized recommendations. The system addresses the challenges of accessibility 
+					and efficiency in literature search, enabling researchers to save time and effort. 
+				</p>
+			    <br>
+
+				<!-- Tombol Mulai -->
+				<nav id="navgo" class="navbar" style="background-color:#ffffff;z-index: 0;">
+					<ul class="nav nav-pills">
+						<li class="nav-item">
+							<a class="btn btn-default btn-lg" href="#aplikasi" style="background-color:#28ace5">Mulai</a>
+						</li>
+					</ul>
+				</nav>
+
+			</div>
+			<div class="col-sm-6">
+				<br>
+				<br>
+				<!-- Gambar Deskripsi Aplikasi -->
+				<img src={{ url_for('static', filename='/images/3.png') }} width="500" ></img>
+			</div>
+		</div>
+	</div>
+
+
+<!-- Bagian Halaman (Aplikasi) -->
+	<div class="row">
+		<div class="col-sm-6">
+			<h1>Search Here</h1>
+			<form id="search-form">
+				<input type="text" name="query" placeholder="Enter your keyword" required>
+				<button type="submit">Search</button>
+			</form>
+
+			<div id="search-results">
+				<!-- Search results will be updated here -->
+			</div>
+		</div>
+	</div>
+
+	<!-- Bagian Halaman (Anggota Kelompok) -->
+	<div id="anggotaKelompok" class="container-fluid text-center">
+		<br>
+		<h2>ResearchMate Squad</h2>
+		<h4>Presented BY MIA & YOGA </h4>
+		<br>
+		<div class="row slideanim">
+		
+			
+		</div>
+	    
+	</div>
+
+	<!-- Footer -->
+	<footer class="container-fluid text-center">
+		<a href="#halamanku" title="To Top">
+			<span class="glyphicon glyphicon-chevron-up"></span>
+		</a>
+		<p>Orbit Future Academy <br> <a href="https://orbitfutureacademy.id/">orbitfutureacademy.id</a></p>
+	</footer>
+
+	<!-- JavaScript untuk Animasi Scroll dan Prediksi Model -->
+	<script  src={{ url_for('static', filename='/js/client_side.js') }}></script>
+
+</body>
+</html>
